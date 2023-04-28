@@ -11,6 +11,7 @@ router.post("/add", (req, res) => {
   const newTweet = new Tweet({
     userId: req.body.userId,
     text: req.body.text,
+    date: Date.now(),
   });
   newTweet
     .save()
@@ -29,9 +30,11 @@ router.post("/add", (req, res) => {
 });
 
 router.get("/getAll", (req, res) => {
-  Tweet.find().then((data) => {
-    res.json({ result: true, tweets: data });
-  });
+  Tweet.find()
+    .populate("userId")
+    .then((data) => {
+      res.json({ result: true, tweets: data });
+    });
 });
 
 module.exports = router;
