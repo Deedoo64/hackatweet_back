@@ -29,6 +29,7 @@ router.post("/signup", (req, res) => {
           result: true,
           token: data.token,
           firstname: req.body.firstname,
+          id: data._id,
         });
       });
     } else {
@@ -54,7 +55,7 @@ router.post("/signin", (req, res) => {
     }
     console.log("Compare ", req.body.password, " and ", data.password);
     if (bcrypt.compareSync(req.body.password, data.password))
-      res.json({ result: true, token: data.token });
+      res.json({ result: true, token: data.token, id: data._id });
     else res.json({ result: false, error: "Wrong password" });
   });
 });
