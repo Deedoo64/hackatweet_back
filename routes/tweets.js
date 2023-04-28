@@ -4,7 +4,6 @@ const Tweet = require("../models/tweets");
 const { checkBody } = require("../modules/checkBody");
 
 router.post("/add", (req, res) => {
-  console.log("AAAAAAAAA");
   if (!checkBody(req.body, ["userId", "text"])) {
     res.json({ result: false, error: "Missing or empty fields" });
     return;
@@ -28,4 +27,11 @@ router.post("/add", (req, res) => {
       });
     });
 });
+
+router.get("/getAll", (req, res) => {
+  Tweet.find().then((data) => {
+    res.json({ result: true, tweets: data });
+  });
+});
+
 module.exports = router;
